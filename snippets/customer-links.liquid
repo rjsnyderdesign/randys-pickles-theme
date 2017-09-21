@@ -1,0 +1,16 @@
+{% if shop.customer_accounts_enabled %}
+  {% if customer  %}
+    <li class="customer-links"><a href="/account">Your Account</a>
+		<span class="or">or</span>
+		{{ 'Logout' | customer_logout_link }}
+		</li>
+  {% else %}
+    <li class="customer-links">
+      {{ 'Log in' | customer_login_link }}
+      {% if shop.customer_accounts_optional %}
+      <span class="or">or</span>
+      {{ 'Create an account' | customer_register_link }}
+      {% endif %}
+    </li>
+  {% endif %}
+{% endif %}

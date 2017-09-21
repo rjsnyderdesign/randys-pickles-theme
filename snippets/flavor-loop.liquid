@@ -1,0 +1,25 @@
+{% capture collection_handle %}{{ product-loop | handleize }}{% endcapture %}
+{% capture url %}/collections/pickles{{ product-loop }}{{ product.url }}{% endcapture %}
+<div class="flavor clearfix">
+  
+  <div class="span3">
+    <a href="{{ url }}">
+      <img class="with-border" src="{{ product.featured_image | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+    </a>
+  </div>
+  
+  <div class="span9">
+    <a href="{{ url }}" class="clearfix">
+      <h2>{{ product.title }}</h2>
+		</a>
+		<p class="product-description">{{ product.description }}</p>      
+    <div class="purchase">
+			<a href="{{ url }}" class="clearfix btn">More Info</a>
+		</div>
+  </div>
+  
+</div>
+
+{% unless template contains 'collection' %}
+{% cycle 'clear-product-loop': '', '', '', '<div style="clear:both;"></div>' %}
+{% endunless %}

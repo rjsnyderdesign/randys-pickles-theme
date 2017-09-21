@@ -1,0 +1,95 @@
+        {% paginate article.comments by 100 %}
+        <div id="article" class="row">
+  
+          <div class="span9 article">
+    
+            <!-- Begin article -->
+            <div class="article-body clearfix">
+              <h1 class="mb0">{{ article.title }}</h1>
+              <p class="date blog-date" style="display: block;">
+                {{ article.published_at | date: "%B %d %Y" }}
+                {% if article.comments_enabled? and article.comments_count > 0 %}
+                <span>
+                  <a href="{{ article.url }}#comments">{{ article.comments_count }} {{ article.comments_count | pluralize: "Comment", "Comments" }}</a>
+                </span>
+                {% endif %}
+              </p>
+              <div id="article-content">
+                {{ article.content }}
+              </div>
+            </div>
+            <!-- End article -->
+            <hr class="divider" />
+            <!-- End social icons -->
+
+            <!-- Begin comments -->
+            {% if blog.comments_enabled? %}
+            <div id="comments" class="comments">
+      
+              {% if article.comments.size > 0 or comment.created_at %}
+              <h2 class="comment-title">Comments</h2>
+      
+              {% if comment and comment.created_at %}
+                <div id="comment-{{ comment.id }}" class="comment border-bottom clearfix">
+                  <h3 class="author"><strong>{{ comment.author }}</strong> on <span class="date">{{ comment.created_at | date: "%B %d %Y at %I:%M%p" }}</span></h3>
+                  <div>{{ comment.content }}</div>
+                </div> <!-- /.comment -->
+              {% endif %}
+      
+              {% for comment in article.comments %}
+                <div id="comment-{{ comment.id }}" class="comment border-bottom clearfix">
+                  <h3 class="author"><strong>{{ comment.author }}</strong> on <span class="date">{{ comment.created_at | date: "%B %d %Y at %I:%M%p" }}</span></h3>
+                  <div>{{ comment.content }}</div>
+                </div> <!-- /.comment -->
+              {% endfor %}
+
+              {% include 'pagination' %}
+
+              {% endif %}
+              <div class="comment_form">
+                {% form "new_comment", article %}
+                <h2 class="comment-title">Leave a comment</h2>
+
+                {% if form.posted_successfully? %}
+                {% if blog.moderated? %}
+                <p class="subtext success">Successfully posted your comment. It will have to be approved by the blog owner first before showing up.</p>
+                {% else %}
+                <p class="subtext success">Successfully posted your comment.</p>
+                {% endif %}
+                {% endif %}
+
+                {% if form.errors %}
+                <p class="subtext error">Not all the fields have been filled out correctly</p>
+                {% endif %}
+
+                <label for="comment_author">Your name</label>
+                <input type="text" id="comment_author" name="comment[author]" size="40" class="text" />
+                <label for="comment_email">Your email</label>
+                <input type="text" id="comment_email" name="comment[email]" size="40" class="text" />
+                <label for="comment_body">Comment</label>
+                <textarea id="comment_body" name="comment[body]" cols="40" rows="5" class="text">{{form.body}}</textarea>
+
+                <input type="submit" value="Post comment" class="btn" id="comment-submit" />
+
+                {% if blog.moderated? %}
+                <div class="notice">Comments have to be approved before showing up</div>
+                {% endif %}
+
+                {% endform %}
+              </div>
+            </div> 
+            {% endif %}
+            <!-- End comments -->
+            <!-- Begin social icons -->
+            <div class="social">
+              {% include 'addthis-article' %}
+            </div>
+    
+          </div>
+  
+          <!-- Begin sidebar -->
+          {% include 'blog-sidebar' %}
+          <!-- End sidebar -->
+  
+        </div>
+        {% endpaginate %}

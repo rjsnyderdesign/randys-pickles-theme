@@ -1,0 +1,64 @@
+.embed .confirm { 
+  .create-message, a.start-cta { display: none !important;}
+  
+}
+@media only screen and (max-width: 450px){
+.wufoo {
+  
+  #header {
+    display: none;
+  }
+  
+  input.large, textarea {
+    max-width: 250px;
+    width: 250px;
+    min-width: 250px;
+  }
+  
+  center {
+    text-align: left;
+    display:block;
+  }
+  
+  #recaptcha_logo {
+    display: none;
+  }
+  
+  td {
+    padding: 0;
+  }
+  
+  td {
+    &:nth-child(1) {
+      display: block;
+    }
+    &:nth-child(2), &:nth-child(3) {
+      display: none;
+    }
+  }
+}
+}
+
+@media only screen and (max-width: 350px){
+  .wufoo {
+  
+    #recaptcha_challenge_image, #recaptcha_image {
+      width: 210px;
+      height: auto;
+    }
+  
+    .recaptchatable .recaptcha_image_cell center {
+      height: 40px;
+    }
+  }
+}
+
+.wufoo {
+  input[type=submit] { 
+    -webkit-box-shadow:none; -moz-box-shadow:none; box-shadow:none; display:inline-block; height:40px; line-height: 40px; border:none; margin:0; padding:0 20px; color: #fff; font-weight: normal; font-size: 20px; text-transform:none; background: #f99f25; width:auto; font-family: sans-serif; cursor: pointer; 
+    
+    &:hover {
+      opacity: .7;
+    }
+  }
+}

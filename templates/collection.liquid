@@ -1,0 +1,295 @@
+{% if collection.handle == 'buy-pickles-online' %}
+
+        <!--div class="alert shipping">Due to high volumes please expect shipping delays</div-->
+        <div class="span12">
+          <h1>Buy Pickles Online</h1>
+          <p>Hand-crafted in Cleveland, Ohio, Randy's Pickles takes ingredients seriously. We use all-natural products and preservatives. Our recipes are our take on the <a href="/collections/pickles/products/deli-style-dill-pickles">traditional pickle</a> and with some of our recipes, we kick the notch up and add peppers and spices to make some of our best sellers - our <a href="/collections/pickles/products/spicy-dill-pickles">spicy pickles</a> and our <a href="/collections/pickles/products/mustache-on-fire-pickles">hot pickles</a>. Each jar is carefully hand packed in Cleveland, Ohio in a professional kitchen to ensure that you get the best possible pickle -- an exceptional pickle.</p>
+        </div>
+        <div id="collection">
+
+          {% paginate collection.products by settings.pagination_limit %}
+          <!-- Begin collection info -->
+          <div class="row">     
+
+            <!-- Standard Recipe -->
+            <!-- Start for loop to go through collections -->
+            {% for collection in collections %}
+              {% if collection.title == 'Standard Recipe Pickles' %}
+
+              <!-- End sort collection -->
+              <div class="span12">
+                <h2 class="collection-title w-line-middle mb0"><span>{{ collection.title }}</span></h2>
+                <p class="subtitle">Buy our pickles online by the 4 pack, or buy them by the case!</p>
+              </div>
+              <!-- Begin collection description -->
+              <div class="span12">
+                {% if collection.description != "" %}
+                  {{ collection.description }}
+                {% endif %}
+              </div>
+              <!-- End collection description -->
+
+
+              <!-- End collection info -->
+
+              <!-- Begin no products -->
+              {% if collection.products.size == 0 %}
+              <div class="row">
+                <div class="span12 expanded-message">
+                  <p>No products found</p>
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="row products">
+                {% for product in collection.products %}
+                {% include 'product-loop' with collection.handle %}
+                {% endfor %}
+              </div>
+              {% endif %}
+
+            {% endfor %}
+            <!-- End Standard Flavor -->
+            
+            <!-- Combos and Deals -->
+            {% for collection in collections %}
+              {% if collection.title == 'Combos and Deals' %}
+
+              <!-- End sort collection -->
+              <div class="span12">
+                <h2 class="collection-title w-line-middle mb0"><span>{{ collection.title }}</span></h2>
+                <p class="subtitle">You choose between our standard flavors!</p>
+              </div>
+              <!-- Begin collection description -->
+              <div class="span12">
+                {% if collection.description != "" %}
+                  {{ collection.description }}
+                {% endif %}
+              </div>
+              <!-- End collection description -->
+              <!-- End collection info -->
+              
+              <!-- Begin no products -->
+              {% if collection.products.size == 0 %}
+              <div class="row">
+                <div class="span12 expanded-message">
+                  <p>No products found</p>
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="row products">
+                {% for product in collection.products %}
+                {% include 'product-loop' with collection.handle %}
+                {% endfor %}
+              </div>
+              {% endif %}
+
+            {% endfor %}
+            <!-- End Combos and Deals -->
+
+            <!-- Merchandise -->
+            {% for collection in collections %}
+              {% if collection.title == 'Merchandise' %}
+
+              <!-- End sort collection -->
+              <div class="span12">
+                <h2 class="collection-title w-line-middle"><span>{{ collection.title }}</span></h2>
+              </div>
+              <!-- Begin collection description -->
+              <div class="span12">
+                {% if collection.description != "" %}
+                  {{ collection.description }}
+                {% endif %}
+              </div>
+              <!-- End collection description -->
+
+
+              <!-- End collection info -->
+
+              <!-- Begin no products -->
+              {% if collection.products.size == 0 %}
+              <div class="row">
+                <div class="span12 expanded-message">
+                  <p>No products found</p>
+                </div>
+              </div>
+              {% endif %}
+
+              <div class="row products">
+                {% for product in collection.products %}
+                {% include 'product-loop' with collection.handle %}
+                {% endfor %}
+              </div>
+              {% endif %}
+
+            {% endfor %} 
+            <!-- End Merchandise -->
+
+          {% include 'pagination' %}
+
+          {% endpaginate %}
+          <!-- End no products -->
+          </div>
+
+        </div>
+
+        <script>
+        /*
+          Shopify.queryParams = {};
+          if (location.search.length) {
+            for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+              aKeyValue = aCouples[i].split('=');
+              if (aKeyValue.length > 1) {
+                Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+              }
+            }
+          }
+          var collFilters = jQuery('.coll-filter');
+          collFilters.change(function() {
+              var newTags = [];
+              var newURL = '';
+              delete Shopify.queryParams.page;
+              collFilters.each(function() { 
+                if (jQuery(this).val()) {
+                  newTags.push(jQuery(this).val());
+                }
+              });
+              {% if collection.handle %}
+              newURL = '/collections/' + '{{ collection.handle }}';
+              if (newTags.length) {
+                newURL += '/' + newTags.join('+');
+              }
+              var search = jQuery.param(Shopify.queryParams);
+              if (search.length) {
+                newURL += '?' + search;
+              }
+              location.href = newURL;    
+              {% else %}
+              if (newTags.length) {
+                Shopify.queryParams.constraint = newTags.join('+');        
+              }
+              else {
+                delete Shopify.queryParams.constraint;
+              }
+              location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+              {% endif %}      
+          });
+          jQuery('.sort-by')
+            .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+            .bind('change', function() {
+              Shopify.queryParams.sort_by = jQuery(this).val();
+              location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+            });
+        */
+        </script>
+
+
+
+
+        <!-- Any collection besides /collections/all -->
+  
+        {% else %}
+
+        <div id="collection">
+
+          <!-- Begin collection info -->
+          <div class="row p5">
+            <div class="span12">
+    
+              <!-- Begin breadcrumb -->
+              <div class="breadcrumb clearfix">
+                <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/collections/buy-pickles-online" title="Shop - All Randy's Pickles Products" itemprop="url"><span itemprop="title">Shop</span></a></span> 
+                <span class="arrow-space">&#62;</span> 
+                <strong>{{ collection.title }}</strong>         
+
+              </div>
+              <!-- End breadcrumb -->
+              </div>
+              <div class="span12">  
+              <!-- End sort collection -->
+                <h1 class="collection-title p5">{{ collection.title }}</h1>
+              </div>
+              <div class="span12">  
+                <!-- Begin collection description -->
+                {% if collection.description != "" %}
+                  {{ collection.description }}
+                {% endif %}
+                <!-- End collection description -->
+              </div>
+    
+          </div>
+          <!-- End collection info -->
+
+          <!-- Begin no products -->
+          {% if collection.products.size == 0 %}
+          <div class="row">
+            <div class="span12 expanded-message">
+              <p>No products found</p>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="row products">
+            {% for product in collection.products %}
+            {% include 'product-loop' with collection.handle %}
+            {% endfor %}
+          </div>
+
+          <!-- End no products -->
+          <div class="span12">
+            <a href="/collections/buy-pickles-online" class="btn">View All Products</a>
+          </div>
+
+        </div>
+
+        <script>
+        /*
+          Shopify.queryParams = {};
+          if (location.search.length) {
+            for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+              aKeyValue = aCouples[i].split('=');
+              if (aKeyValue.length > 1) {
+                Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+              }
+            }
+          }
+          var collFilters = jQuery('.coll-filter');
+          collFilters.change(function() {
+              var newTags = [];
+              var newURL = '';
+              delete Shopify.queryParams.page;
+              collFilters.each(function() { 
+                if (jQuery(this).val()) {
+                  newTags.push(jQuery(this).val());
+                }
+              });
+              {% if collection.handle %}
+              newURL = '/collections/' + '{{ collection.handle }}';
+              if (newTags.length) {
+                newURL += '/' + newTags.join('+');
+              }
+              var search = jQuery.param(Shopify.queryParams);
+              if (search.length) {
+                newURL += '?' + search;
+              }
+              location.href = newURL;    
+              {% else %}
+              if (newTags.length) {
+                Shopify.queryParams.constraint = newTags.join('+');        
+              }
+              else {
+                delete Shopify.queryParams.constraint;
+              }
+              location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+              {% endif %}      
+          });
+          jQuery('.sort-by')
+            .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+            .bind('change', function() {
+              Shopify.queryParams.sort_by = jQuery(this).val();
+              location.search = jQuery.param(Shopify.queryParams).replace(/\+/g, '%20');
+            });
+        */
+        </script>
+      {% endif %}

@@ -1,0 +1,60 @@
+<div class="flyout" style="display: none;">
+        <ul class="clearfix">
+          {% for link in linklists.main-menu.links %}
+          {% if linklists[link.handle] == empty %}
+          <li>
+            <a href="{{ link.url }}" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', '{{ link.title }}');" class="{% if link.active %} current{% endif %} navlink"><span>{{ link.title }}</span></a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ link.url }}" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', '{{ link.title }}');" class="{% if link.active %} current{% endif %} navlink"><span>{{ link.title }}</span></a>    
+            <span class="more"><i class="fa fa-plus"></i></span>
+            <ul class="sub-menu">
+              {% for l in linklists[link.handle].links %}
+              <li><a href="{{ l.url }}" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav - Sub Nav', '{{ l.title }}');" class="{% if l.active %}current {% endif %}{% if forloop.last %} last {% endif %} navlink">{{ l.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endif %}
+          {% endfor %}
+          <li>
+              <a href="/pages/where-to-buy-randys-pickles" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', 'Where To Buy');" class=" navlink"><span>Where To Buy</span></a>
+            </li>
+            <li class="search-field">
+            <form class="search" action="/search">
+              <button type="submit" class="go"><i class="fa fa-search"></i></button>
+              <input type="text" name="q" class="search_box" placeholder="Search" value="{{ search.terms }}" />
+            </form>
+          </li>
+        </ul>
+        <ul class="secondary-menu">
+      {% for link in linklists.top-menu.links %}
+      {% if linklists[link.handle] == empty %}
+      <li>
+        <a href="{{ link.url }}" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', '{{ link.title }}');" class="{% if link.active %} current{% endif %} navlink"><span>{{ link.title }}</span></a>
+      </li>
+      {% else %}
+      <li>
+        <a href="{{ link.url }}" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', '{{ link.title }}');"  class="{% if link.active %} current{% endif %} navlink"><span>{{ link.title }}</span></a>    
+        <span class="more"><i class="fa fa-plus"></i></span>
+        <ul class="sub-menu">
+          {% for l in linklists[link.handle].links %}
+          <li><a href="{{ l.url }}"  onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav - Sub Nav', '{{ l.title }}');" class="{% if l.active %}current {% endif %}{% if forloop.last %} last {% endif %} navlink">{{ l.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% if shop.customer_accounts_enabled %}
+        {% if customer  %}
+          <li><a href="/account" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', 'Your Account');"  class="navlink">Your Account</a></li>
+          <li><a href="/account/logout" onclick="ga('send', 'event', 'Universal Clicks', 'Mobile Nav', 'Logout');"  class="navlink">Logout</a></li>
+        {% else %}
+          <li>{{ 'Log in' | customer_login_link }}</li>
+          {% if shop.customer_accounts_optional %}
+          <li>{{ 'Create an account' | customer_register_link }}</li>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+        </ul>
+      </div>

@@ -1,0 +1,13 @@
+{
+  "shopify": {
+    "checkout": {
+      "shipping": {
+        "estimated_delivery_date_range": " ",
+        "estimated_delivery_date": {
+          "one": " ",
+          "other": " "
+        }
+      }
+    }
+  }
+}

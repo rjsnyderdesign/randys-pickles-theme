@@ -1,0 +1,53 @@
+              {% capture collection_handle %}{{ product-loop | handleize }}{% endcapture %}
+              {% capture url %}{% if collection_handle != "" %}/collections/{{ product-loop }}{{ product.url }}{% else %}{{ product.url }}{% endif %}{% endcapture %}
+              <div class="product span3 adaptive-grid">
+  
+                {% if product.price_min < product.compare_at_price_min %}
+                  {% if settings.show_sale_circle %}
+                  <span class="circle sale">Sale</span>
+                  {% endif %}
+                {% endif %}
+  
+                <div class="image">
+                  <a href="{{ url }}" onclick="ga('send', 'event', 'Product Loop Clicks', 'Product', '{{ product.title }} - Image');">
+                    <img src="{{ product.featured_image | product_img_url: 'large' }}" alt="{{ product.title | escape  }}" />
+                  </a>
+                </div>
+  
+                <div class="details">
+                  <a href="{{ url }}" onclick="ga('send', 'event', 'Product Loop Clicks', 'Product', '{{ product.title }} - Text');" class="clearfix">
+                    <h4 class="title">{{ product.title }}&nbsp;{% if collection.id == 27266311 %}<span class="product-type">({{ product.type}})</span>{% endif %}</h4>
+      
+                    {% if settings.product_vendor %}
+                    <span class="vendor">{{ product.vendor }}</span>
+                    {% endif %}
+      
+                    <span class="price">
+                    {% if product.available %}
+                      {{ product.price | money }}
+                      {% if product.compare_at_price_max > product.price %}
+                      <small><em>from</em></small>
+                      <del>{{ product.compare_at_price | money }}</del>
+                      {% endif %}
+                      {% if collection.id == 27266311 %}
+                        {% for tag in product.tags %}  
+                                - {{ tag }}
+                        {% endfor %}
+                      {% endif %}
+                    {% else %}
+                      <span class="sold-out">
+                      {{ product.price | money }} Sold Out
+                      </span>
+                    {% endif %}
+                    </span>
+      
+                  </a>
+                </div>
+  
+              </div>
+              
+              {% comment %}
+              {% unless template contains 'collection' %}
+              {% cycle 'clear-product-loop': '', '', '', '', '<div style="clear:both;"></div>' %}
+              {% endunless %}
+              {% endcomment %}

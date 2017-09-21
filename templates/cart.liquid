@@ -1,0 +1,160 @@
+<!--div class="alert shipping">Due to high volumes please expect shipping delays</div-->
+
+<div id="cart">
+  
+  <!-- Begin empty cart -->
+  {% if cart.item_count == 0 %}
+  <div class="row">
+    <div class="span12 expanded-message">
+      <h1>Your cart is empty</h1>
+      <p>Oh no your cart seems to be empty! Click the button below to continue shopping. If you are having issues please don't hesitate to send us an email at <a href="mailto:hello@randyspickles.com">hello@randyspickles.com</a> or give us a call at <a tel="2162006636">216-200-6636</a>, we would be more than happy to help.</p>
+      <a href="/collections/buy-pickles-online" class="btn">Continue Shopping</a>
+    </div>
+  </div>
+  
+  <!-- Standard Recipe -->
+      <!-- Start for loop to go through collections -->
+      {% for collection in collections %}
+        {% if collection.title == 'Standard Recipe Pickles' or collection.title == 'Merchandise' %}
+    
+        <!-- End sort collection -->
+          <div class="span12">
+            <h2 class="collection-title w-line-middle mb0"><span>{{ collection.title }}</span></h2>
+            {% if collection.title == 'Standard Recipe Pickles' %}
+            <p class="subtitle"><b>Buy our pickles online in a 4 pack, or buy them by the case!</b></p>
+            {% endif %}
+          </div>
+          <!-- Begin collection description -->
+          <div class="span12">
+            {% if collection.description != "" %}
+              {{ collection.description }}
+            {% endif %}
+          </div>
+          <!-- End collection description -->
+      
+  
+        <!-- End collection info -->
+  
+          <!-- Begin no products -->
+        {% if collection.products.size == 0 %}
+        <div class="row">
+          <div class="span12 expanded-message">
+            <p>No products found</p>
+          </div>
+        </div>
+        {% endif %}
+  
+        <div class="row products">
+          {% for product in collection.products %}
+          {% include 'product-loop' with collection.handle %}
+          {% endfor %}
+        </div>
+        {% endif %}
+      
+      {% endfor %}
+  
+  <!-- End empty cart -->
+  
+  <!-- Begin cart -->
+  {% else %}
+  
+  <div class="row">
+    
+    <div class="span12">
+      <div class="mb20 clearfix">
+        <a href="/collections/buy-pickles-online" class="btn grey pull-right">Continue Shopping</a>
+      </div>
+      <h1 class="p0">Your cart</h1>    
+
+      <form action="/cart" method="post" id="cartform">
+        <table>
+          <thead>
+            <tr>
+              <th class="image">&nbsp;</th>
+              <th class="item">&nbsp;</th>
+              <th class="qty">Qty</th>
+              <th class="price">Price</th>
+              <th class="remove">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+            <tr>
+              <td class="image">
+                <div class="product_image">
+                  <a href="{{ item.url }}">
+                    <img src="{{ item | img_url: 'small' }}"  alt="{{ item.title | escape }}" />
+                  </a>
+                </div>
+              </td>
+              <td class="item">
+                <a href="{{ item.url }}">
+                  <strong>{{ item.product.title }}</strong>
+                  {% if item.product.variants.size > 1 %}
+                  <span class="variant_title">{{ item.variant.title }}</span>
+                  {% endif %}
+                </a>
+                {% for p in item.properties %}
+                	{% unless p.last == blank %}
+                		<br /><i>{{p.first}}</i>: {{ p.last }}
+                	{% endunless %} 
+                {% endfor %}
+              </td>
+              <td class="qty">
+                <input type="text" size="4" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" onfocus="this.select();" class="tc item-quantity" />
+              </td>
+              <td class="price">{{ item.line_price | money }}</td>
+              <td class="remove"><a href="/cart/change?line={{ forloop.index }}&quantity=0" class="cart">Remove</a></td>
+            </tr>
+            {% endfor %}
+            <tr class="summary">
+              <td class="image">&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td class="price"><span class="total"><strong>{{ cart.total_price | money }}</strong></span></td>
+              <td>&nbsp;</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div class="buttons clearfix">
+          <input type="submit" id="checkout" class="btn" name="checkout" value="Secure Checkout" />
+          <input type="submit" id="update-cart" class="btn" name="update" value="Update" />
+        </div>
+        
+        {% if additional_checkout_buttons or settings.display_cart_note %}
+        <div class="row">
+          {% if additional_checkout_buttons %}
+          <div class="extra-checkout-buttons span6">            
+            {{ content_for_additional_checkout_buttons }}
+          </div>
+          {% endif %}
+          {% if settings.display_cart_note %}
+          <div class="span6">
+            <div class="checkout-buttons clearfix">
+              <label for="note">Add special instructions for your order...</label>
+              <textarea id="note" name="note" rows="10" cols="50">{{ cart.note }}</textarea>
+            </div>
+          </div>
+          {% endif %}
+        </div> 
+        {% endif %}
+        {% endif %}
+
+      </form>
+    </div>
+
+    {% if cart.item_count == 0 %}
+    {% unless settings.featured_products == blank or collections[settings.featured_products].empty? %}
+    <div class="cart-featured">
+      <h3 class="featured-cart-title">Featured Items</h3>
+      {% for product in collections[settings.featured_products].products limit: 4 %}
+      {% include 'product-loop' %}
+      {% endfor %}
+    </div>
+    {% endunless %}
+    {% endif %}
+
+  </div>
+  <!-- End cart -->
+</div>

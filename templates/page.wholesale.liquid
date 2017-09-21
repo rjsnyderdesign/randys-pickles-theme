@@ -1,0 +1,70 @@
+<div id="page" class="row">
+          <div class="span12">
+            <h1>{{ page.title }}</h1>
+            <div class="page-with-contact-form">
+              {{ page.content }}
+              {% comment %}
+              {% form 'contact' %}
+                {% if form.posted_successfully? %}
+                <div class="successForm feedback">
+                  <h2>Thanks for contacting us! We'll get back to you as soon as possible.</h2>
+                </div>
+                {% endif %}
+                {% if form.errors %}
+                <div class="errorForm feedback">
+                  <p>Oops, sorry. We were unable to submit your inquiry because it contained {{ form.errors | size | pluralize: 'an error', 'a few errors' }}. Please correct the following and submit again:</p>
+                  {% for field in form.errors %}
+                    <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div id="contactFormWrapper">
+                  <p><strong>Fields marked with<span class="required">*</span> are required.</strong></p>
+                  <p>
+                    <label>Your Name<span class="required">*</span></label>
+                    <input type="text" id="contactFormName" name="contact[wholesaleName]" placeholder="John Doe" required />
+                  </p>
+                  <p>
+                    <label>Email<span class="required">*</span></label>
+                    <input type="email" id="contactFormEmail" name="contact[email]" placeholder="john@example.com" required />
+                  </p>
+                  <p>
+                    <label>Retail Location / Restaurant</label>
+                    <input type="text" id="contactFormLocationName" name="contact[wholesaleLocation]" placeholder="John's Winery" />
+                  </p>
+                  <p>
+                    <label>Phone Number:</label>
+                    <input type="tel" id="contactFormTelephone" name="contact[wholesalePhone]" placeholder="555-555-1234" />
+                  </p> 
+                  <p>
+                    <label>Message<span class="required">*</span></label>
+                    <textarea rows="15" cols="75" id="contactFormMessage" name="contact[body]" placeholder="Your Message" required></textarea>
+                  </p>
+                  <input type="submit" id="contactFormSubmit" value="Send" class="btn" />
+                </div>
+              {% endform %}
+              {% endcomment %}
+              <div id="wufoo-mxj9t9r1vh9lio">
+              Fill out my <a href="https://rjsnyderdesign.wufoo.com/forms/mxj9t9r1vh9lio">online form</a>.
+              </div>
+              <script type="text/javascript">var mxj9t9r1vh9lio;(function(d, t) {
+              var s = d.createElement(t), options = {
+              'userName':'rjsnyderdesign',
+              'formHash':'mxj9t9r1vh9lio',
+              'autoResize':true,
+              'height':'687',
+              'async':true,
+              'host':'wufoo.com',
+              'header':'show',
+              'ssl':true};
+              s.src = ('https:' == d.location.protocol ? 'https://' : 'http://') + 'www.wufoo.com/scripts/embed/form.js';
+              s.onload = s.onreadystatechange = function() {
+              var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return;
+              try { mxj9t9r1vh9lio = new WufooForm();mxj9t9r1vh9lio.initialize(options);mxj9t9r1vh9lio.display(); } catch (e) {}};
+              var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr);
+              })(document, 'script');</script>
+              
+              
+            </div>
+          </div>
+        </div>

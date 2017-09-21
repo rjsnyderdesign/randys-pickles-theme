@@ -1,0 +1,99 @@
+<div class="three-block-container clearfix">
+          <!-- Column -->
+          <div class="span4 homepage-combos">
+            <h3>Try Our Flavors</h3>
+            <a href='/collections/combos-deals/products/pickle-sample-pack' onclick="ga('send', 'event', 'Homepage Clicks', 'Three Blocks', '6 Jar Combo');" >
+              <div class="image-container">
+                <div class="ribbon-wrapper" style="display: none;">
+                  <div class="ribbon orange">Limited</div>
+                </div>
+                <img src="{{ 'homepage-blocks-6pack.jpg' | asset_url }}" alt="Randy's 4 Jar Pickle Combo" class="image" />
+              </div>
+              <h2 class="product-title">4 Jar Combo</h2>
+              <p class="product-description">Mix and Match</p>
+              <p class="product-price price">$39.99</p>
+              <div class="btn green-100">Buy Now</div>
+            </a>
+          </div>
+          <!-- Column -->
+          <div class="span4 homepage-seasonal">
+            <h3>Seasonal Special</h3>
+            <a href='/products/asparagus' onclick="ga('send', 'event', 'Homepage Clicks', 'Three Blocks', 'Asparagus');">
+              <div class="image-container">
+                <div class="ribbon-wrapper">
+                  <div class="ribbon orange">Limited</div>
+                </div>
+                <img src="{{ 'homepage-asparagus.jpg' | asset_url }}" class="image" alt="Randy's Pickles Asparagus" />
+              </div>
+              <h2 class="product-title">Asparagus - 4 Jars</h2>
+              <p class="product-description">Only available online. Limited available.</p>
+              <p class="product-price price">$47.99</p>
+              <div class="btn green-100">Order Now</div>
+            </a>          
+          </div>
+          <!-- Column -->
+          <div class="span4 homepage-wholesale last">
+            <h3>Wholesale</h3>
+            <a href='/pages/wholesale' onclick="ga('send', 'event', 'Homepage Clicks', 'Three Blocks', 'Wholesale');">
+              <div class="image-container">
+                <img src="{{ 'homepage-block-wholesale.jpg' | asset_url }}" class="image" alt="Wholesale Randy's Pickles" />
+              </div>
+              <h2 class="product-title">Sell Our Products</h2>
+              <p class="product-description">Find out how you can sell Randys Pickles</p>
+              <div class="btn green-100 pt10">More Info</div>
+            </a>
+          </div>
+        </div>
+        <div id="modal-bg" onClick="closeModal(); return false;"></div>
+        <!-- Video Modal -->
+        <div id="videoModal" class="reveal-modal large">
+            <div class="flex-video widescreen vimeo">
+                <iframe id="videoIframe" width="1280" height="720" src="https://player.vimeo.com/video/182708878" allowfullscreen></iframe>
+            </div>
+
+            <a href="#" class="close-reveal-modal green-x" onClick="closeModal(); return false;"><svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"><path d="M10.667 0L6 4.666 1.334 0 0 1.333 4.667 6 0 10.665 1.333 12 6 7.333 10.668 12 12 10.666 7.333 6 12 1.332 10.667 0z" fill="#ffffff" fill-rule="evenodd"></path></svg></a>
+        </div>
+        {% if settings.show_fp_images %}
+        <!-- Begin promo images -->
+        <div class="row" id="fp-images" style="margin-bottom:25px">
+          {% for i in (1..3) %}
+          {% capture fp_image %}fp_image_{{ i }}.jpg{% endcapture %}
+          {% capture fp_link %}fp_image_{{ i }}_link{% endcapture %}
+          {% capture fp_alt %}fp_image_{{ i }}_alt{% endcapture %}
+          <div class="span4">
+            <a href="{{ settings[fp_link] }}">
+              <img src="{{ fp_image | asset_url }}" alt="{{ settings[fp_alt] | escape }}" />
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- End promo images -->
+        {% endif %}
+
+        {% if settings.homepage != blank %}
+        <!-- Begin intro -->
+        <div class="span12 p20">
+          <div class="intro clearfix">
+            <h2>{{ pages[settings.homepage].title }}</h2>
+            <div>{{ pages[settings.homepage].content }}</div>
+          </div>
+        </div>
+        <!-- End intro -->
+        {% endif %}
+      
+        <div class="products">
+          {% for product in collections[settings.frontpage_collection].products %}
+          {% include 'product-loop' with settings.frontpage_collection %}
+          {% endfor %}
+        </div>
+
+        {% if settings.show_collections and settings.frontpage_collections != '' and settings.frontpage_collections != 'main-menu' and linklists[settings.frontpage_collections].links.size > 0 %}
+        <div class="products">
+          {% for link in linklists[settings.frontpage_collections].links %}
+          {% if link.type == 'collection_link' %}
+            {% assign collection = link.object %}
+            {% include 'collection-loop' %}
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
